@@ -10,7 +10,7 @@ const app = express();
 // 
 
 // importing the listing schema for validation at the server side by using the package joi.
-const {listingSchema,reviewSchema} = require("./schema.js");
+// const {listingSchema,reviewSchema} = require("./schema.js");
 // 
 
 // importing the ExpressError class.
@@ -69,9 +69,9 @@ const userRouter = require("./routes/user.js");
 // 
 
 // creating connection to database.
-// const mongo = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl = process.env.ATLASDB_URL;
-const MongoStore = require('connect-mongo');
+const mongo = "mongodb://127.0.0.1:27017/wanderlust";
+// const dbUrl = process.env.ATLASDB_URL;
+// const MongoStore = require('connect-mongo');
 
 main().then((res) => {
     console.log("connected to the database");
@@ -80,28 +80,28 @@ main().then((res) => {
 });
 
 async function main(){
-    await mongoose.connect(dbUrl); 
+    await mongoose.connect(mongo); 
 }
 // 
 
 // connect-mongo package things.
-const store = MongoStore.create({
-    mongoUrl:dbUrl,
-    crypto:{
-        secret:process.env.SECRERT,
-    },
-    touchAfter:24*3600,
-});
+// const store = MongoStore.create({
+//     mongoUrl:dbUrl,
+//     crypto:{
+//         secret:process.env.SECRERT,
+//     },
+//     touchAfter:24*3600,
+// });
 
-store.on("error",() => {
-    console.log("ERROR IN MONGO SESSION STORE",err);
-});
+// store.on("error",() => {
+//     console.log("ERROR IN MONGO SESSION STORE",err);
+// });
 
 // 
 
 // selecting the sesion options.
 const sessionOption = {
-    store,
+    // store,
     secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
@@ -166,7 +166,7 @@ app.use((err,req,res,next)=>{
 // 
 
 // server listening port.  
-app.listen(8080,() => {
+app.listen(3000,() => {
     console.log("server is listening to port 8080");
 });
 // 
